@@ -6,7 +6,7 @@ I wrote this sample for my Alley application. My production WordPress migration 
 
 ## What it does
 
-Given a CSV export and a campaign_action post type already registered, the command validates the file's columns, then reads and imports each row: title, status, campaign slug, and signature count become post fields, meta, and a taxonomy term. A progress bar tracks the run, and a summary at the end reports how many rows were created, updated, or failed.
+Given a CSV export and a campaign_action post type already registered, the command validates the file's columns, then reads and imports each row: title, status, campaign slug, and signature count become post fields, meta, and a taxonomy term. The file is streamed in a single pass, logging progress every batch rather than reading it twice to size a progress bar, and a summary at the end reports how many rows were created, updated, or failed.
 
 ## The interesting part: safe to run twice
 
@@ -23,7 +23,7 @@ Each row carries a legacy ID, stored in post meta rather than derived from the t
 
 ## Files
 
-- 'class-campaign-action-migration-command.php' registers the wp campaign-migrate import-actions command and contains the full import, matching, and reporting logic.
+- `wp-cli-migration-command.php` registers the `wp campaign-migrate import-actions` command and contains the full import, matching, and reporting logic.
 
 ## Notes
 
