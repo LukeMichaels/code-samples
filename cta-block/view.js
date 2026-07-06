@@ -48,8 +48,9 @@
 
 	function writeCookie( name, value ) {
 		var expires = new Date( Date.now() + COOKIE_DAYS * 864e5 ).toUTCString();
+		var secure = 'https:' === window.location.protocol ? '; Secure' : '';
 		document.cookie = name + '=' + encodeURIComponent( value ) +
-			'; expires=' + expires + '; path=/; SameSite=Lax';
+			'; expires=' + expires + '; path=/; SameSite=Lax' + secure;
 	}
 
 	/**
