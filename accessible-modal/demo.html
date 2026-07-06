@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Accessible modal demo</title>
+	<link rel="stylesheet" href="modal.css">
+	<style>
+		body { font-family: system-ui, sans-serif; margin: 0; padding: 3rem; line-height: 1.5; }
+		button { font: inherit; padding: 0.6rem 1.1rem; border-radius: 0.375rem; cursor: pointer; }
+		.modal__content > * + * { margin-top: 1rem; }
+		.modal__actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
+		label { display: block; font-weight: 600; }
+		input { font: inherit; width: 100%; padding: 0.5rem; box-sizing: border-box; }
+	</style>
+</head>
+<body>
+	<main>
+		<h1>Accessible modal demo</h1>
+		<p>Open the dialog, then try Tab, Shift+Tab, Escape, and clicking the backdrop.</p>
+		<button type="button" data-modal-open="newsletter">Sign up for the newsletter</button>
+	</main>
+
+	<dialog id="newsletter" class="modal" aria-labelledby="newsletter-title">
+		<div class="modal__content">
+			<h2 id="newsletter-title">Stay in the loop</h2>
+			<p>Occasional updates, no spam, unsubscribe anytime.</p>
+			<label for="newsletter-email">Email address</label>
+			<input id="newsletter-email" type="email" data-modal-initial-focus>
+			<div class="modal__actions">
+				<button type="button" data-modal-close>No thanks</button>
+				<button type="submit">Subscribe</button>
+			</div>
+		</div>
+	</dialog>
+
+	<script src="modal.js"></script>
+</body>
+</html>

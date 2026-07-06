@@ -1,0 +1,60 @@
+/**
+ * Accessible modal styles.
+ *
+ * Open and close are animated through the .is-open and .is-closing classes the
+ * controller toggles. Both transitions collapse to nothing for visitors who
+ * have asked for reduced motion.
+ */
+.modal {
+	width: min(90vw, 32rem);
+	padding: 0;
+	border: 0;
+	border-radius: 0.5rem;
+	box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.25);
+	opacity: 0;
+	transform: translateY(1rem);
+	transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.modal.is-open {
+	opacity: 1;
+	transform: none;
+}
+
+.modal.is-closing {
+	opacity: 0;
+	transform: translateY(1rem);
+}
+
+.modal::backdrop {
+	background: rgba(0, 0, 0, 0.5);
+	opacity: 0;
+	transition: opacity 200ms ease;
+}
+
+.modal.is-open::backdrop {
+	opacity: 1;
+}
+
+.modal__content {
+	padding: 1.5rem;
+}
+
+/* Lock the page behind the modal, compensating for the scrollbar width set by
+   the controller so the layout does not shift. */
+body.modal-open {
+	overflow: hidden;
+	padding-right: var(--modal-scrollbar, 0);
+}
+
+.modal :focus-visible {
+	outline: 3px solid #1f4e79;
+	outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.modal,
+	.modal::backdrop {
+		transition: none;
+	}
+}
