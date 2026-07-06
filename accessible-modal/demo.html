@@ -20,20 +20,18 @@
 		<p>Open the dialog, then try Tab, Shift+Tab, Escape, and clicking the backdrop.</p>
 		<button type="button" data-modal-open="newsletter">Sign up for the newsletter</button>
 	</main>
-
 	<dialog id="newsletter" class="modal" aria-labelledby="newsletter-title">
-		<div class="modal__content">
+		<form class="modal__content" method="dialog">
 			<h2 id="newsletter-title">Stay in the loop</h2>
 			<p>Occasional updates, no spam, unsubscribe anytime.</p>
 			<label for="newsletter-email">Email address</label>
-			<input id="newsletter-email" type="email" data-modal-initial-focus>
+			<input id="newsletter-email" type="email" data-modal-initial-focus required>
 			<div class="modal__actions">
 				<button type="button" data-modal-close>No thanks</button>
 				<button type="submit">Subscribe</button>
 			</div>
-		</div>
+		</form>
 	</dialog>
-
 	<script src="modal.js"></script>
 </body>
 </html>
