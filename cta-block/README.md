@@ -41,7 +41,7 @@ call to action.
 
 ## Files
 
-- `cta-block.php` registers the block, declares its ACF fields in code, and
+- `lm-cta-block.php` registers the block, declares its ACF fields in code, and
   loads the front-end assets.
 - `render.php` is the server-side template: every variant, fully escaped.
 - `view.js` does the cache-safe weighted assignment, sticky cookie, and

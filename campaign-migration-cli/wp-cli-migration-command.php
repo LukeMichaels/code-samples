@@ -12,9 +12,9 @@
  * creating duplicates, and leaves an audit trail of what happened.
  *
  * Usage:
- *   wp campaign-migrate import-actions ./legacy-export.csv
- *   wp campaign-migrate import-actions ./legacy-export.csv --dry-run
- *   wp campaign-migrate import-actions ./legacy-export.csv --batch-size=500
+ * wp campaign-migrate import-actions ./legacy-export.csv
+ * wp campaign-migrate import-actions ./legacy-export.csv --dry-run
+ * wp campaign-migrate import-actions ./legacy-export.csv --batch-size=500
  */
 
 if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
@@ -23,7 +23,7 @@ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
 
 class Campaign_Action_Migration_Command extends WP_CLI_Command {
 
-	const POST_TYPE          = 'campaign_action';
+	const POST_TYPE = 'campaign_action';
 	const LEGACY_ID_META_KEY = '_legacy_action_id';
 
 	const REQUIRED_COLUMNS = array(
@@ -54,9 +54,9 @@ class Campaign_Action_Migration_Command extends WP_CLI_Command {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp campaign-migrate import-actions ./legacy-export.csv
-	 *     wp campaign-migrate import-actions ./legacy-export.csv --dry-run
-	 *     wp campaign-migrate import-actions ./legacy-export.csv --batch-size=500
+	 * wp campaign-migrate import-actions ./legacy-export.csv
+	 * wp campaign-migrate import-actions ./legacy-export.csv --dry-run
+	 * wp campaign-migrate import-actions ./legacy-export.csv --batch-size=500
 	 *
 	 * @when after_wp_load
 	 */
@@ -67,8 +67,8 @@ class Campaign_Action_Migration_Command extends WP_CLI_Command {
 			WP_CLI::error( "Cannot read file: {$file}" );
 		}
 
-		$batch_size    = (int) WP_CLI\Utils\get_flag_value( $assoc_args, 'batch-size', 200 );
-		$dry_run       = (bool) WP_CLI\Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$batch_size = (int) WP_CLI\Utils\get_flag_value( $assoc_args, 'batch-size', 200 );
+		$dry_run = (bool) WP_CLI\Utils\get_flag_value( $assoc_args, 'dry-run', false );
 		$stop_on_error = (bool) WP_CLI\Utils\get_flag_value( $assoc_args, 'stop-on-error', false );
 
 		$handle = fopen( $file, 'r' );
@@ -103,10 +103,10 @@ class Campaign_Action_Migration_Command extends WP_CLI_Command {
 		$results = array(
 			'created' => 0,
 			'updated' => 0,
-			'failed'  => 0,
+			'failed' => 0,
 		);
 
-		$row_number  = 1; // Row 0 was the header.
+		$row_number = 1; // Row 0 was the header.
 		$since_flush = 0;
 
 		// A single streaming pass: rows are counted and processed together
@@ -122,7 +122,7 @@ class Campaign_Action_Migration_Command extends WP_CLI_Command {
 				$record = array_combine( $header, $row );
 
 				try {
-					$outcome            = $this->import_row( $record, $dry_run );
+					$outcome = $this->import_row( $record, $dry_run );
 					$results[ $outcome ]++;
 				} catch ( Exception $e ) {
 					$this->record_failure( $results, $row_number, $e->getMessage(), $stop_on_error );
@@ -180,13 +180,13 @@ class Campaign_Action_Migration_Command extends WP_CLI_Command {
 		}
 
 		$legacy_id = sanitize_text_field( $record['legacy_id'] );
-		$existing  = $this->find_by_legacy_id( $legacy_id );
+		$existing = $this->find_by_legacy_id( $legacy_id );
 
 		$post_args = array(
-			'post_type'   => self::POST_TYPE,
-			'post_title'  => sanitize_text_field( $record['title'] ),
+			'post_type' => self::POST_TYPE,
+			'post_title' => sanitize_text_field( $record['title'] ),
 			'post_status' => $this->map_status( $record['status'] ),
-			'post_name'   => sanitize_title( $record['title'] . '-' . $legacy_id ),
+			'post_name' => sanitize_title( $record['title'] . '-' . $legacy_id ),
 		);
 
 		if ( $existing ) {
@@ -223,12 +223,12 @@ class Campaign_Action_Migration_Command extends WP_CLI_Command {
 	 */
 	private function find_by_legacy_id( $legacy_id ) {
 		$existing = get_posts( array(
-			'post_type'      => self::POST_TYPE,
-			'post_status'    => 'any',
-			'meta_key'       => self::LEGACY_ID_META_KEY,
-			'meta_value'     => $legacy_id,
+			'post_type' => self::POST_TYPE,
+			'post_status' => 'any',
+			'meta_key' => self::LEGACY_ID_META_KEY,
+			'meta_value' => $legacy_id,
 			'posts_per_page' => 1,
-			'fields'         => 'ids',
+			'fields' => 'ids',
 		) );
 
 		return $existing ? get_post( $existing[0] ) : null;
@@ -236,10 +236,10 @@ class Campaign_Action_Migration_Command extends WP_CLI_Command {
 
 	private function map_status( $legacy_status ) {
 		$status_map = array(
-			'active'   => 'publish',
-			'closed'   => 'publish',
+			'active' => 'publish',
+			'closed' => 'publish',
 			'archived' => 'draft',
-			'draft'    => 'draft',
+			'draft' => 'draft',
 		);
 
 		$key = strtolower( trim( $legacy_status ) );

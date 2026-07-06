@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name:  LM Call to Action (A/B)
- * Description:  A cache-safe, A/B-testable call-to-action block built on ACF.
- * Version:      1.0.0
+ * Plugin Name: LM Call to Action (A/B)
+ * Description: A cache-safe, A/B-testable call-to-action block built on ACF.
+ * Version: 1.0.0
  * Requires PHP: 7.4
- * Author:       Luke Michaels
+ * Author: Luke Michaels
  *
  * @package LM\CtaBlock
  */
@@ -27,17 +27,17 @@ function register_block(): void {
 
 	acf_register_block_type(
 		array(
-			'name'            => 'cta',
-			'title'           => __( 'Call to Action (A/B)', 'lm-cta' ),
-			'description'     => __( 'A call-to-action that can run a weighted A/B test across variants.', 'lm-cta' ),
-			'category'        => 'design',
-			'icon'            => 'megaphone',
-			'keywords'        => array( 'cta', 'button', 'ab test' ),
+			'name' => 'cta',
+			'title' => __( 'Call to Action (A/B)', 'lm-cta' ),
+			'description' => __( 'A call-to-action that can run a weighted A/B test across variants.', 'lm-cta' ),
+			'category' => 'design',
+			'icon' => 'megaphone',
+			'keywords' => array( 'cta', 'button', 'ab test' ),
 			'render_template' => __DIR__ . '/render.php',
-			'enqueue_assets'  => __NAMESPACE__ . '\\enqueue_assets',
-			'supports'        => array(
+			'enqueue_assets' => __NAMESPACE__ . '\\enqueue_assets',
+			'supports' => array(
 				'anchor' => true,
-				'align'  => array( 'left', 'center', 'right' ),
+				'align' => array( 'left', 'center', 'right' ),
 			),
 		)
 	);
@@ -81,58 +81,58 @@ function register_fields(): void {
 
 	acf_add_local_field_group(
 		array(
-			'key'      => 'group_lm_cta',
-			'title'    => 'Call to Action (A/B)',
-			'fields'   => array(
+			'key'   => 'group_lm_cta',
+			'title'  => 'Call to Action (A/B)',
+			'fields'  => array(
 				array(
-					'key'          => 'field_lm_cta_experiment',
-					'label'        => 'Experiment ID',
-					'name'         => 'experiment_id',
-					'type'         => 'text',
+					'key' => 'field_lm_cta_experiment',
+					'label' => 'Experiment ID',
+					'name' => 'experiment_id',
+					'type' => 'text',
 					'instructions' => 'Optional. Groups this CTA with an analytics experiment. Auto-generated when left blank.',
 				),
 				array(
-					'key'          => 'field_lm_cta_variants',
-					'label'        => 'Variants',
-					'name'         => 'variants',
-					'type'         => 'repeater',
-					'min'          => 1,
-					'layout'       => 'block',
+					'key' => 'field_lm_cta_variants',
+					'label' => 'Variants',
+					'name' => 'variants',
+					'type' => 'repeater',
+					'min'  => 1,
+					'layout'    => 'block',
 					'button_label' => 'Add variant',
-					'sub_fields'   => array(
+					'sub_fields'  => array(
 						array(
-							'key'      => 'field_lm_cta_label',
-							'label'    => 'Button label',
-							'name'     => 'label',
-							'type'     => 'text',
+							'key'   => 'field_lm_cta_label',
+							'label'  => 'Button label',
+							'name'   => 'label',
+							'type'   => 'text',
 							'required' => 1,
 						),
 						array(
-							'key'      => 'field_lm_cta_url',
-							'label'    => 'Destination URL',
-							'name'     => 'url',
-							'type'     => 'url',
+							'key'   => 'field_lm_cta_url',
+							'label'  => 'Destination URL',
+							'name'   => 'url',
+							'type'   => 'url',
 							'required' => 1,
 						),
 						array(
-							'key'           => 'field_lm_cta_style',
-							'label'         => 'Style',
-							'name'          => 'style',
-							'type'          => 'select',
-							'choices'       => array(
-								'primary'   => 'Primary',
+							'key'  => 'field_lm_cta_style',
+							'label' => 'Style',
+							'name'  => 'style',
+							'type'  => 'select',
+							'choices'    => array(
+								'primary'  => 'Primary',
 								'secondary' => 'Secondary',
 							),
 							'default_value' => 'primary',
 						),
 						array(
-							'key'           => 'field_lm_cta_weight',
-							'label'         => 'Weight',
-							'name'          => 'weight',
-							'type'          => 'number',
+							'key'  => 'field_lm_cta_weight',
+							'label' => 'Weight',
+							'name'  => 'weight',
+							'type'  => 'number',
 							'default_value' => 1,
-							'min'           => 0,
-							'instructions'  => 'Relative weight. Two variants at 1 and 1 split traffic evenly; 3 and 1 is a 75/25 split.',
+							'min'  => 0,
+							'instructions' => 'Relative weight. Two variants at 1 and 1 split traffic evenly; 3 and 1 is a 75/25 split.',
 						),
 					),
 				),
@@ -140,9 +140,9 @@ function register_fields(): void {
 			'location' => array(
 				array(
 					array(
-						'param'    => 'block',
+						'param'  => 'block',
 						'operator' => '==',
-						'value'    => BLOCK_NAME,
+						'value'  => BLOCK_NAME,
 					),
 				),
 			),

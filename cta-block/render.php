@@ -17,21 +17,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 $experiment_id = sanitize_key( (string) get_field( 'experiment_id' ) );
-$raw_variants  = get_field( 'variants' );
-$is_preview    = ! empty( $block['is_preview'] );
+$raw_variants = get_field( 'variants' );
+$is_preview = ! empty( $block['is_preview'] );
 // Normalize once so the markup and the client config can never drift apart.
 $variants = array();
 if ( is_array( $raw_variants ) ) {
 	foreach ( $raw_variants as $variant ) {
 		$url = esc_url_raw( (string) ( $variant['url'] ?? '' ) );
-		// A call to action with no destination is not worth rendering.
 		if ( '' === $url ) {
 			continue;
 		}
 		$variants[] = array(
-			'label'  => sanitize_text_field( (string) ( $variant['label'] ?? '' ) ),
-			'url'    => $url,
-			'style'  => 'secondary' === ( $variant['style'] ?? '' ) ? 'secondary' : 'primary',
+			'label' => sanitize_text_field( (string) ( $variant['label'] ?? '' ) ),
+			'url' => $url,
+			'style' => 'secondary' === ( $variant['style'] ?? '' ) ? 'secondary' : 'primary',
 			'weight' => max( 0, (int) ( $variant['weight'] ?? 1 ) ),
 		);
 	}
@@ -50,7 +49,7 @@ if ( '' === $experiment_id ) {
 $config = wp_json_encode(
 	array(
 		'experiment' => $experiment_id,
-		'weights'    => array_column( $variants, 'weight' ),
+		'weights' => array_column( $variants, 'weight' ),
 	)
 );
 ?>
